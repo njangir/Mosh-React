@@ -12,7 +12,7 @@ import defaultStyles from "../config/defaultStyles";
 import PickerItem from "./PickerItem";
 import AppText from "./AppText";
 
-const categories = [
+/* const categories = [
     {
         label: "Furniture",
         value: "1",
@@ -21,9 +21,16 @@ const categories = [
         label: "Clothing",
         value: "2",
     },
-];
+]; */
 
-function AppPicker({ icon, selectedItem, placeholder, onSelectItem }) {
+function AppPicker({
+    icon,
+    selectedItem,
+    placeholder,
+    onSelectItem,
+    items,
+    PickerItemComponent = PickerItem,
+}) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     return (
         <>
@@ -37,9 +44,17 @@ function AppPicker({ icon, selectedItem, placeholder, onSelectItem }) {
                             style={styles.icon}
                         />
                     )}
-                    <AppText style={[defaultStyles.text, styles.text]}>
-                        {selectedItem ? selectedItem.label : placeholder}
-                    </AppText>
+                    {selectedItem ? (
+                        <AppText style={[defaultStyles.text, styles.text]}>
+                            {selectedItem.label}
+                        </AppText>
+                    ) : (
+                        <AppText
+                            style={[defaultStyles.text, styles.placeholder]}
+                        >
+                            {placeholder}
+                        </AppText>
+                    )}
                     <MaterialCommunityIcons
                         name="chevron-down"
                         color={defaultStyles.colors.medium}
@@ -49,10 +64,10 @@ function AppPicker({ icon, selectedItem, placeholder, onSelectItem }) {
             </TouchableWithoutFeedback>
             <Modal visible={isModalVisible} animationType="slide">
                 <FlatList
-                    data={categories}
-                    keyExtractor={categories.value}
+                    data={items}
+                    keyExtractor={items.value}
                     renderItem={({ item }) => (
-                        <PickerItem
+                        <PickerItemComponent
                             label={item.label}
                             onPress={() => {
                                 setIsModalVisible(false);
@@ -80,6 +95,10 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight: 10,
+    },
+    placeholder: {
+        flex: 1,
+        color: defaultStyles.colors.medium,
     },
 });
 export default AppPicker;
