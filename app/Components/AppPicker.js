@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     View,
     StyleSheet,
     TouchableWithoutFeedback,
     Modal,
+    FlatList,
 } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import defaultStyles from "../config/defaultStyles";
-import { FlatList } from "react-native-gesture-handler";
 import PickerItem from "./PickerItem";
+import AppText from "./AppText";
 
 const categories = [
     {
@@ -36,7 +37,7 @@ function AppPicker({ icon, selectedItem, placeholder, onSelectItem }) {
                             style={styles.icon}
                         />
                     )}
-                    <AppText style={defaultStyles.text}>
+                    <AppText style={[defaultStyles.text, styles.text]}>
                         {selectedItem ? selectedItem.label : placeholder}
                     </AppText>
                     <MaterialCommunityIcons

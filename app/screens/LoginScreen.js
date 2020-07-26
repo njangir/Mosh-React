@@ -1,11 +1,13 @@
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Image } from "react-native";
 
 import Screen from "../Components/Screen";
 import AppTextInput from "../Components/AppTextInput";
-import { TextInput } from "react-native-gesture-handler";
+import AppButton from "../Components/AppButton";
 
 function LoginScreen(props) {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
     return (
         <Screen style={styles.container}>
             <Image
@@ -17,14 +19,21 @@ function LoginScreen(props) {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
+                textContentType="emailAddress"
+                onChangeText={(text) => setEmail(text)}
             ></AppTextInput>
             <AppTextInput
                 icon="lock"
                 secureTextEntry
                 autoCapitalize="none"
                 autoCorrect={false}
+                textContentType="password"
+                onChangeText={(text) => setPassword(text)}
             ></AppTextInput>
-            <AppButton></AppButton>
+            <AppButton
+                title="Login"
+                onPress={() => console.log(email, password)}
+            ></AppButton>
         </Screen>
     );
 }
